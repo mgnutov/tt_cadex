@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -Werror -Wextra -std=c++17
+CFLAGS = -Wall -Werror -Wextra -std=c++17 
 EXE_SRCS = *.cpp
 LIB_SRCS = lib/*.cpp
 EXE = main_exe
@@ -46,5 +46,5 @@ sanitize: clean run
 debug: CFLAGS += -g
 debug: clean run
 
-
-
+parallel: CFLAGS += -fopenmp -DPARALLEL
+parallel: clean run

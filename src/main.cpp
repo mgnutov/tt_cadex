@@ -6,7 +6,7 @@ int main() {
   std::srand(std::time(nullptr));
 
   std::vector<std::shared_ptr<Curve>> curves;
-  for (size_t i = 0; i < 20; ++i) {
+  for (size_t i = 0; i < 30; ++i) {
     int curveType = rand() % 3;
     if (curveType == 0)
       curves.push_back(std::make_shared<Circle>(getDblRnd()));
@@ -29,12 +29,22 @@ int main() {
   });
   printCurves(circles, M_PI_4, title = "Sorted circles");
 
-  double sum = std::accumulate(
-      circles.begin(), circles.end(), 0, [](double sum, auto circle) {
+  std::clock_t start = clock();
+  double sumstl = std::accumulate(
+      circles.begin(), circles.end(), 0.0, [](double sum, auto circle) {
         return sum + (*dynamic_cast<Circle *>(circle.get())).getRadius();
       });
+  std::clock_t end = clock();
+  std::cout << "Total sum of radii (STL): " << sumstl
+            << "\tTaken time: " << end - start << std::endl;
 
-  std::cout << "Total sum of radii: " << sum << std::endl;
+#ifdef PARALLEL
+  start = clock();
+  double sumomp = parallelComputation(circles);
+  end = clock();
+  std::cout << "Total sum of radii (OMP): " << sumomp
+            << "\tTaken time: " << end - start << std::endl;
+#endif
 
   return 0;
 }

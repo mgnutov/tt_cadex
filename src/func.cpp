@@ -15,3 +15,18 @@ void tt::printCurves(const std::vector<std::shared_ptr<tt::Curve>> &curves,
   }
   std::cout << std::endl;
 }
+
+#ifdef PARALLEL
+double tt::parallelComputation(
+    const std::vector<std::shared_ptr<tt::Curve>> &circles) {
+  double result = 0;
+#pragma omp parallel shared(circles) reduction(+ : result) num_threads(2)
+  {
+#pragma omp for
+    for (const auto &circle : circles)
+      // cppcheck-suppress useStlAlgorithm
+      result += (*dynamic_cast<Circle *>(circle.get())).getRadius();
+  }
+  return result;
+}
+#endif
