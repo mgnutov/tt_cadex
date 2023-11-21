@@ -1,5 +1,5 @@
-#ifndef TT_LIBS_CURVES_H_
-#define TT_LIBS_CURVES_H_
+#ifndef TT_LIB_CURVES_H_
+#define TT_LIB_CURVES_H_
 
 #include <cmath>
 #include <stdexcept>
@@ -8,24 +8,25 @@
 
 namespace tt {
 
-struct Point {
+struct Coordinates {
   double x, y, z;
-  bool operator==(const Point& o) const&;
+  bool operator==(const Coordinates& o) const&;
 };
 
 class Curve {
  public:
   virtual ~Curve() = 0;
-  virtual Point getPoint(const double t) const& = 0;
-  virtual Point getDerivative(const double t) const& = 0;
+  virtual Coordinates getPoint(const double t) const& = 0;
+  virtual Coordinates getDerivative(const double t) const& = 0;
 
 };  // class Curve
 
 class Circle : public Curve {
  public:
   explicit Circle(double radius_);
-  Point getPoint(const double t) const& override;
-  Point getDerivative(const double t) const& override;
+  Coordinates getPoint(const double t) const& override;
+  Coordinates getDerivative(const double t) const& override;
+  double getRadius() const&;
 
  private:
   double radius_;
@@ -35,8 +36,8 @@ class Circle : public Curve {
 class Ellipse : public Curve {
  public:
   explicit Ellipse(double radiusX, double radiusY);
-  Point getPoint(const double t) const& override;
-  Point getDerivative(const double t) const& override;
+  Coordinates getPoint(const double t) const& override;
+  Coordinates getDerivative(const double t) const& override;
 
  private:
   double radiusX_;
@@ -47,8 +48,8 @@ class Ellipse : public Curve {
 class Helixe : public Curve {
  public:
   explicit Helixe(double radius, double step);
-  Point getPoint(const double t) const& override;
-  Point getDerivative(const double t) const& override;
+  Coordinates getPoint(const double t) const& override;
+  Coordinates getDerivative(const double t) const& override;
 
  private:
   double radius_;
@@ -58,4 +59,4 @@ class Helixe : public Curve {
 
 }  // namespace tt
 
-#endif  // TT_LIBS_CURVES_H_
+#endif  // TT_LIB_CURVES_H_

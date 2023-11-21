@@ -1,1 +1,6 @@
-# Test task 
+## Test task 
+
+```bash
+cd src
+make
+```
