@@ -3,7 +3,7 @@
 double tt::getDblRnd() { return rand() / 1e6; }
 
 void tt::printCurves(const std::vector<std::shared_ptr<tt::Curve>> &curves,
-                     const double t, std::string title) {
+                     const double t, const std::string &title) {
   std::cout << title << std::endl;
   for (const auto &curve : curves) {
     auto pnt = (*curve).getPoint(t);

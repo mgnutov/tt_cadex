@@ -1,6 +1,5 @@
 CC = g++
 CFLAGS = -Wall -Werror -Wextra -std=c++17
-# CFLAGS += -pedantic
 TFLAGS = -lgtest -pthread
 TST_SRCS = tests/*.cpp
 LIB_SRCS = *.cpp
@@ -38,10 +37,10 @@ check:
 
 valgrind: clean $(EXE)
 	CK_FORK=no valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes \
-	--verbose --log-file=$(EXE)_valgrind.log ./$(EXE) > $(EXE).log
+	--verbose ./$(EXE)
 
 leaks: clean $(EXE)
-	leaks -atExit -- ./$(EXE) > $(EXE).log
+	leaks -atExit -- ./$(EXE)
 
 sanitize: CFLAGS += -g -fsanitize=address
 sanitize: clean test

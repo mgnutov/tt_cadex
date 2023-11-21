@@ -4,9 +4,8 @@ using namespace tt;
 
 int main() {
   std::srand(std::time(nullptr));
-  std::vector<std::shared_ptr<Curve>> curves;
-  std::vector<std::shared_ptr<Curve>> circles;
 
+  std::vector<std::shared_ptr<Curve>> curves;
   for (size_t i = 0; i < 20; ++i) {
     int curveType = rand() % 3;
     if (curveType == 0)
@@ -16,22 +15,24 @@ int main() {
     else
       curves.push_back(std::make_shared<Helixe>(getDblRnd(), getDblRnd()));
   }
-  printCurves(curves, M_PI_4, "All curves");
+  std::string title = "All curves";
+  printCurves(curves, M_PI_4, title);
 
+  std::vector<std::shared_ptr<Curve>> circles;
   std::copy_if(curves.begin(), curves.end(), std::back_inserter(circles),
                [](const std::shared_ptr<Curve> &ptr) {
                  return typeid(*ptr).name() == typeid(Circle).name();
                });
-
   std::sort(circles.begin(), circles.end(), [](auto &c1, auto &c2) {
     return (*dynamic_cast<Circle *>(c1.get())).getRadius() <
            (*dynamic_cast<Circle *>(c2.get())).getRadius();
   });
-  printCurves(circles, M_PI_4, "Sorted circles");
+  printCurves(circles, M_PI_4, title = "Sorted circles");
 
-  double sum = 0;
-  for (const auto &circle : circles)
-    sum += (*dynamic_cast<Circle *>(circle.get())).getRadius();
+  double sum = std::accumulate(
+      circles.begin(), circles.end(), 0, [](double sum, auto circle) {
+        return sum + (*dynamic_cast<Circle *>(circle.get())).getRadius();
+      });
 
   std::cout << "Total sum of radii: " << sum << std::endl;
 

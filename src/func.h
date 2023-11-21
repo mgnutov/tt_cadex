@@ -6,6 +6,7 @@
 #include <ctime>
 #include <iostream>
 #include <memory>
+#include <numeric>
 #include <vector>
 
 #include "lib/curves.h"
@@ -14,7 +15,7 @@ namespace tt {
 
 double getDblRnd();
 void printCurves(const std::vector<std::shared_ptr<tt::Curve>> &curves,
-                 const double t, std::string title);
+                 const double t, const std::string &title);
 
 }  // namespace tt
 
