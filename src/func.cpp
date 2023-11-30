@@ -6,8 +6,8 @@ void tt::printCurves(const std::vector<std::shared_ptr<tt::Curve>> &curves,
                      const double t, const std::string &title) {
   std::cout << title << std::endl;
   for (const auto &curve : curves) {
-    auto pnt = (*curve).getPoint(t);
-    auto der = (*curve).getDerivative(t);
+    auto pnt = curve->getPoint(t);
+    auto der = curve->getDerivative(t);
     std::printf(
         "%15s when t=%.2lf    coordinates: (%8.2lf, %8.2lf, %8.2lf),    first "
         "derivative: (%8.2lf, %8.2lf, %8.2lf)\n",
@@ -25,7 +25,7 @@ double tt::parallelComputation(
 #pragma omp for
     for (const auto &circle : circles)
       // cppcheck-suppress useStlAlgorithm
-      result += (*dynamic_cast<Circle *>(circle.get())).getRadius();
+      result += dynamic_cast<Circle *>(circle.get())->getRadius();
   }
   return result;
 }

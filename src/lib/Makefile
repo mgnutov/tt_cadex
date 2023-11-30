@@ -46,4 +46,4 @@ sanitize: CFLAGS += -g -fsanitize=address
 sanitize: clean test
 
 debug: CFLAGS += -g
-debug: clean test
+debug: clean $(EXE)

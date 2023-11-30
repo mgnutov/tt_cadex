@@ -23,7 +23,7 @@ class Curve {
 
 class Circle : public Curve {
  public:
-  explicit Circle(double radius_);
+  explicit Circle(double radius);
   Coordinates getPoint(const double t) const& override;
   Coordinates getDerivative(const double t) const& override;
   double getRadius() const&;

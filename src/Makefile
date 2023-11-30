@@ -4,7 +4,7 @@ EXE_SRCS = *.cpp
 LIB_SRCS = lib/*.cpp
 EXE = main_exe
 
-.PHONY: all run clean format check valgrind leaks sanitize debug
+.PHONY: all run clean format check valgrind leaks sanitize debug parallel
 
 all: run
 
@@ -44,7 +44,7 @@ sanitize: CFLAGS += -g -fsanitize=address
 sanitize: clean run
 
 debug: CFLAGS += -g
-debug: clean run
+debug: clean $(EXE)
 
 parallel: CFLAGS += -fopenmp -DPARALLEL
 parallel: clean run
